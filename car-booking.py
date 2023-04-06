@@ -1,5 +1,5 @@
 import socket as soc
-from adv import *
+from aux_func import *
 
 while True:
     s =  soc.socket()
@@ -29,11 +29,11 @@ while True:
         else:
             src = src.capitalize()
             dest = dest.capitalize()
-            with open('car.json', 'r') as f:
+            with open('./data/car.json', 'r') as f:
                 car_city = json.load(f)
             car_city[src] = car_city[src] - 1
             car_city[dest] = car_city[dest] + 1
-            with open("car.json", "w") as f:
+            with open("./data/car.json", "w") as f:
                 json.dump(car_city, f)
             reply = f"Your car has been booked from {src} to {dest}. Ticket ID: {genTicket()}"
 

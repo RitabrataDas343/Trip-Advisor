@@ -1,6 +1,6 @@
 import socket as soc
 import threading as th
-from adv import *
+from aux_func import *
 
 display()
 

@@ -17,7 +17,7 @@ def display():
     print(banner)
 
 def display_car():
-    with open('car.json', 'r') as f:
+    with open('./data/car.json', 'r') as f:
         car_city = json.load(f)
     print("{:<10} {:<20}".format('CITY', 'AVAILABLE CARS'))
  
@@ -25,7 +25,7 @@ def display_car():
         print("{:<10} {:<20}".format(key, str(value)))
 
 def display_hotel():
-    with open('hotel.json', 'r') as f:
+    with open('./data/hotel.json', 'r') as f:
         hotel_city = json.load(f)
     print("{:<10} {:<20} {:<10}".format('CITY', 'HOTEL', 'NUMBER OF ROOMS'))
  
@@ -35,7 +35,7 @@ def display_hotel():
             print("{:<10} {:<20} {:<10}".format(key, name, num))
 
 def display_flight():
-    with open('flight.json', 'r') as f:
+    with open('./data/flight.json', 'r') as f:
         flights = json.load(f)
     print("{:<15} {:<13} {:<13} {:<10}".format('AIRLINE', 'FROM', 'TO', 'AVAILABLE TICKETS'))
     
@@ -45,12 +45,12 @@ def display_flight():
             print("{:<15} {:<13} {:<13} {:<10}".format(key, src, dest, num))
 
 def verifyCar(c):
-    with open('car.json', 'r') as f:
+    with open('./data/car.json', 'r') as f:
         car_city = json.load(f)
     return c.capitalize() in car_city
 
 def checkCarAvailability(c):
-    with open('car.json', 'r') as f:
+    with open('./data/car.json', 'r') as f:
         car_city = json.load(f)
     return car_city[c.capitalize()]
       
@@ -58,12 +58,12 @@ def genTicket():
     return str(''.join(random.choices(string.ascii_uppercase + string.digits, k = 10)))
 
 def verifyHotelCity(city):
-    with open('hotel.json', 'r') as f:
+    with open('./data/hotel.json', 'r') as f:
         hotel_city = json.load(f)
     return city in hotel_city
 
 def verifyHotelMatch(city, hotel):
-    with open('hotel.json', 'r') as f:
+    with open('./data/hotel.json', 'r') as f:
         hotel_city = json.load(f)
     for i in hotel_city[city]:
         if i[0] == hotel:
@@ -71,7 +71,7 @@ def verifyHotelMatch(city, hotel):
     return False
 
 def verifyHotelAvailability(city, hotel):
-    with open('hotel.json', 'r') as f:
+    with open('./data/hotel.json', 'r') as f:
         hotel_city = json.load(f)
     for i in hotel_city[city]:
         if i[0] == hotel:
@@ -83,7 +83,7 @@ def genRoomNumber():
     return random.randint(100, 300)
 
 def existPath(src, dest):
-    with open('flight.json', 'r') as f:
+    with open('./data/flight.json', 'r') as f:
         flights = json.load(f)
     for key, val in flights.items():
         for i in val:
@@ -93,7 +93,7 @@ def existPath(src, dest):
     return ""
 
 def checkSeatAvailability(airline, src, dest):
-    with open('flight.json', 'r') as f:
+    with open('./data/flight.json', 'r') as f:
         flights = json.load(f)
     for val in flights[airline]:
             fr, to, num = val

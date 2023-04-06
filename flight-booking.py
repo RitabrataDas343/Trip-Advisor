@@ -1,6 +1,6 @@
 import socket as soc
 import json
-from adv import *
+from aux_func import *
 
 while True:
     s =  soc.socket()
@@ -31,13 +31,13 @@ while True:
         elif not checkSeatAvailability(airline, src, dest):
             reply = "Sorry. We don't have any available seats. Please wait."
         else:
-            with open('flight.json', 'r') as f:
+            with open('./data/flight.json', 'r') as f:
                 flights = json.load(f)
             for i in flights[airline]:
                 if i[0] == src and i[1] == dest:
                     i[2] = i[2] - 1
                     break
-            with open("flight.json", "w") as f:
+            with open("./data/flight.json", "w") as f:
                 json.dump(flights, f)
             reply = f"Your flight has been booked at {airline} airlines from {src} to {dest}. Seat No.: {genSeatNumber()}"
 

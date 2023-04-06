@@ -1,6 +1,6 @@
 import socket as soc
 import json
-from adv import *
+from aux_func import *
 
 while True:
     s =  soc.socket()
@@ -36,13 +36,13 @@ while True:
             elif not verifyHotelAvailability(dest, hotel):
                 reply = "Sorry. We don't have any available rooms. Please wait."
             else:
-                with open('hotel.json', 'r') as f:
+                with open('./data/hotel.json', 'r') as f:
                     hotel_city = json.load(f)
                 for i in hotel_city[dest]:
                     if i[0] == hotel:
                         i[1] = i[1] - 1
                         break
-                with open("hotel.json", "w") as f:
+                with open("./data/hotel.json", "w") as f:
                     json.dump(hotel_city, f)
                 reply = f"Your hotel has been booked at {hotel}, {dest}. Room No.: {genRoomNumber()}"
 
