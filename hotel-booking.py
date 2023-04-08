@@ -1,28 +1,17 @@
 import socket as soc
 import json
 from aux_func import *
+import threading as th
 
-while True:
-    s =  soc.socket()
-    print("Socket successfully created")
-
-    port = 6000
-    s.bind(('127.0.0.1', port))
-    print(f"Socket successfully binded to port: {port}")
-
-    s.listen(5)
-    print("Waiting for connection...\n")
-
-    c, addr = s.accept()
-
+def handle_client(client,address):
     while True:
         data = c.recv(1024).decode('ascii')
 
         if(not data):
             break
-        
+            
         print(f"Data Received: {data}\n")
-        dest, hotel = data.split(',')
+        dest, hotel, user = data.split(',')
         dest = dest.capitalize()
         if(len(hotel.split()) != 2):
             reply = "Hotel name not appropriate. Should contain 2 words."
@@ -44,13 +33,22 @@ while True:
                         break
                 with open("./data/hotel.json", "w") as f:
                     json.dump(hotel_city, f)
-                reply = f"Your hotel has been booked at {hotel}, {dest}. Room No.: {genRoomNumber()}"
+                reply = f"Hotel has been booked at {hotel}, {dest} for {user}. Room No.: {genRoomNumber()}"
 
         print(f"Result: {reply}\n")
         c.send(str(reply).encode('ascii'))
-    c.close()
+    c.close()        
 
+            
+while True:
+    s =  soc.socket()
+    print("Socket successfully created")
+    port = 6000
+    s.bind(('127.0.0.1', port))
+    print(f"Socket successfully binded to port: {port}")
+    s.listen(5)
+    print("Waiting for connection...\n")
+    c, addr = s.accept()
+    client_thread = th.Thread(target=handle_client, args=(c, addr))
+    client_thread.start()
 
-
-
-    
