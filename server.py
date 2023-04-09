@@ -24,6 +24,7 @@ def handle_client(conn, addr):
             car_socket.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
             result = car_socket.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
+            conn.send(str(result).encode('ascii'))
             car_socket.close()
 
         elif(operations == "hotel"):
@@ -32,20 +33,30 @@ def handle_client(conn, addr):
             hotel_socket.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
             result = hotel_socket.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
+            conn.send(str(result).encode('ascii'))
             hotel_socket.close()
 
         elif (operations == "flight"):
             flight_socket = soc.socket()
             flight_socket.connect(('127.0.0.1', 4000))
-            flight_socket.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
-            result = flight_socket.recv(1024).decode('ascii')
-            print(f"Result: {result}\n")
+            flight_socket.send(str(info[1]+','+username).encode('ascii'))
+            welcome = flight_socket.recv(1024).decode('ascii')
+            print(f"Result for \'{username}\': {welcome}\n")
+            conn.send(str(welcome).encode('ascii'))
+            menu = flight_socket.recv(1024).decode('ascii')
+            print(f"Result for \'{username}\':\n {menu}\n")
+            conn.send(str(menu).encode('ascii'))
+            param = conn.recv(1024).decode('ascii')
+            print(f"Result for \'{username}\': {param}\n")
+            flight_socket.send(str(param+','+username).encode('ascii'))
+            reply = flight_socket.recv(1024).decode('ascii')
+            conn.send(str(reply).encode('ascii'))
+            print(f"Result for \'{username}\': {reply}\n")
             flight_socket.close()
 
         else:
             result = ""
-
-        conn.send(str(result).encode('ascii'))
+            conn.send(str(result).encode('ascii'))
 
     conn.close()
 

@@ -37,12 +37,10 @@ def display_hotel():
 def display_flight():
     with open('./data/flight.json', 'r') as f:
         flights = json.load(f)
-    print("{:<15} {:<13} {:<13} {:<10}".format('AIRLINE', 'FROM', 'TO', 'AVAILABLE TICKETS'))
-    
+    count = 1
     for key, value in flights.items():
-        for i in value:
-            src, dest, num = i
-            print("{:<15} {:<13} {:<13} {:<10}".format(key, src, dest, num))
+        print(str(count) + '. ' + key)
+        count += 1
 
 def verifyCar(c):
     with open('./data/car.json', 'r') as f:
@@ -82,17 +80,18 @@ def verifyHotelAvailability(city, hotel):
 def genRoomNumber():
     return random.randint(100, 300)
 
-def existPath(src, dest):
+def existPath(src, dest, airline):
     with open('./data/flight.json', 'r') as f:
         flights = json.load(f)
     for key, val in flights.items():
-        for i in val:
-            fr, to, num = i
-            if(src == fr and to == dest):
-                return key
+        if key == airline:
+            for i in val:
+                fr, to, num = i
+                if(src == fr and to == dest):
+                    return key
     return ""
 
-def checkSeatAvailability(airline, src, dest):
+def checkSeatAvailability(src, dest, airline):
     with open('./data/flight.json', 'r') as f:
         flights = json.load(f)
     for val in flights[airline]:

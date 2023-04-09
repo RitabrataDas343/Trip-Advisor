@@ -1,19 +1,18 @@
 import socket as soc
-import json
 from aux_func import *
 
 while True:
-    s =  soc.socket()
+    flight_socket =  soc.socket()
     print("Socket successfully created")
 
     port = 4000
-    s.bind(('127.0.0.1', port))
+    flight_socket.bind(('127.0.0.1', port))
     print(f"Socket successfully binded to port: {port}")
 
-    s.listen(5)
+    flight_socket.listen(5)
     print("Waiting for connection...\n")
 
-    c, addr = s.accept()
+    c, addr = flight_socket.accept()
 
     while True:
         data = c.recv(1024).decode('ascii')
@@ -22,27 +21,47 @@ while True:
             break
         
         print(f"Data Received: {data}\n")
-        src, dest, user = data.split(',')
-        src = src.capitalize()
-        dest = dest.capitalize()
-        airline = existPath(src, dest)
-        if(airline == ""):
-            reply = "Sorry. We cannot provide any airline. Try again."
-        elif not checkSeatAvailability(airline, src, dest):
-            reply = "Sorry. We don't have any available seats. Please wait."
-        else:
-            with open('./data/flight.json', 'r') as f:
-                flights = json.load(f)
-            for i in flights[airline]:
-                if i[0] == src and i[1] == dest:
-                    i[2] = i[2] - 1
-                    break
-            with open("./data/flight.json", "w") as f:
-                json.dump(flights, f, indent=4)
-            reply = f"Your flight has been booked at {airline} airlines from {src} to {dest} for \'{user}\'. Seat No.: {genSeatNumber()}"
+        airline, user = data.split(',')
 
-        print(f"Result: {reply}\n")
-        c.send(str(reply).encode('ascii'))
+        if(int(airline) == 1):
+            spicejet_socket = soc.socket()
+            spicejet_socket.connect(('127.0.0.1', 4001))
+            welcome = "Welcome to SpiceJet airlines"
+            c.send(str(welcome).encode('ascii'))
+            menu = spicejet_socket.recv(1024).decode('ascii')
+            c.send(str(menu).encode('ascii'))
+            param = c.recv(1024).decode('ascii')
+            print(f"Result: {param}\n")
+            spicejet_socket.send(param.encode('ascii'))
+            reply = spicejet_socket.recv(1024).decode('ascii')
+            c.send(str(reply).encode('ascii'))
+            spicejet_socket.close()
+        elif(int(airline) == 2):
+            kingfisher_socket = soc.socket()
+            kingfisher_socket.connect(('127.0.0.1', 4002))
+            welcome = "Welcome to KingFisher airlines"
+            c.send(str(welcome).encode('ascii'))
+            menu = kingfisher_socket.recv(1024).decode('ascii')
+            c.send(str(menu).encode('ascii'))
+            param = c.recv(1024).decode('ascii')
+            print(f"Result: {param}\n")
+            kingfisher_socket.send(param.encode('ascii'))
+            reply = kingfisher_socket.recv(1024).decode('ascii')
+            c.send(str(reply).encode('ascii'))
+            kingfisher_socket.close()
+        elif(int(airline) == 3):
+            indigo_socket = soc.socket()
+            indigo_socket.connect(('127.0.0.1', 4003))
+            welcome = "Welcome to Indigo airlines"
+            c.send(str(welcome).encode('ascii'))
+            menu = indigo_socket.recv(1024).decode('ascii')
+            c.send(str(menu).encode('ascii'))
+            param = c.recv(1024).decode('ascii')
+            print(f"Result: {param}\n")
+            indigo_socket.send(param.encode('ascii'))
+            reply = indigo_socket.recv(1024).decode('ascii')
+            c.send(str(reply).encode('ascii'))
+            indigo_socket.close()
     c.close()
 
 
