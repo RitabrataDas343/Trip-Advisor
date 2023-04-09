@@ -21,7 +21,7 @@ while True:
             break
         
         print(f"Data Received: {data}\n")
-        src, dest = data.split(',')
+        src, dest, user = data.split(',')
         if(not verifyCar(src)) or (not verifyCar(dest)):
             reply = "Sorry. We are not operational in the above city. Try again."
         elif not checkCarAvailability(src):
@@ -35,7 +35,7 @@ while True:
             car_city[dest] = car_city[dest] + 1
             with open("./data/car.json", "w") as f:
                 json.dump(car_city, f, indent=4)
-            reply = f"Your car has been booked from {src} to {dest}. Ticket ID: {genTicket()}"
+            reply = f"Your car has been booked from {src} to {dest} for \'{user}\'. Ticket ID: {genTicket()}"
 
         print(f"Result: {reply}\n")
         c.send(str(reply).encode('ascii'))

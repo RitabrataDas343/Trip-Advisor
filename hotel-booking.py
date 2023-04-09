@@ -22,7 +22,7 @@ while True:
             break
         
         print(f"Data Received: {data}\n")
-        dest, hotel = data.split(',')
+        dest, hotel, user = data.split(',')
         dest = dest.capitalize()
         if(len(hotel.split()) != 2):
             reply = "Hotel name not appropriate. Should contain 2 words."
@@ -44,7 +44,7 @@ while True:
                         break
                 with open("./data/hotel.json", "w") as f:
                     json.dump(hotel_city, f, indent=4)
-                reply = f"Your hotel has been booked at {hotel}, {dest}. Room No.: {genRoomNumber()}"
+                reply = f"Your hotel has been booked at {hotel}, {dest} for \'{user}\'. Room No.: {genRoomNumber()}"
 
         print(f"Result: {reply}\n")
         c.send(str(reply).encode('ascii'))

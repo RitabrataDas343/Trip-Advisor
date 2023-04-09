@@ -22,7 +22,7 @@ while True:
             break
         
         print(f"Data Received: {data}\n")
-        src, dest = data.split(',')
+        src, dest, user = data.split(',')
         src = src.capitalize()
         dest = dest.capitalize()
         airline = existPath(src, dest)
@@ -39,7 +39,7 @@ while True:
                     break
             with open("./data/flight.json", "w") as f:
                 json.dump(flights, f, indent=4)
-            reply = f"Your flight has been booked at {airline} airlines from {src} to {dest}. Seat No.: {genSeatNumber()}"
+            reply = f"Your flight has been booked at {airline} airlines from {src} to {dest} for \'{user}\'. Seat No.: {genSeatNumber()}"
 
         print(f"Result: {reply}\n")
         c.send(str(reply).encode('ascii'))
