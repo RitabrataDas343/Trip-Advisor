@@ -26,7 +26,7 @@ while True:
         if(int(airline) == 1):
             spicejet_socket = soc.socket()
             spicejet_socket.connect(('127.0.0.1', 4001))
-            welcome = "Welcome to SpiceJet airlines"
+            welcome = "Welcome to SpiceJet airlines."
             c.send(str(welcome).encode('ascii'))
             menu = spicejet_socket.recv(1024).decode('ascii')
             c.send(str(menu).encode('ascii'))
@@ -36,10 +36,11 @@ while True:
             reply = spicejet_socket.recv(1024).decode('ascii')
             c.send(str(reply).encode('ascii'))
             spicejet_socket.close()
+
         elif(int(airline) == 2):
             kingfisher_socket = soc.socket()
             kingfisher_socket.connect(('127.0.0.1', 4002))
-            welcome = "Welcome to KingFisher airlines"
+            welcome = "Welcome to KingFisher airlines."
             c.send(str(welcome).encode('ascii'))
             menu = kingfisher_socket.recv(1024).decode('ascii')
             c.send(str(menu).encode('ascii'))
@@ -49,10 +50,11 @@ while True:
             reply = kingfisher_socket.recv(1024).decode('ascii')
             c.send(str(reply).encode('ascii'))
             kingfisher_socket.close()
+
         elif(int(airline) == 3):
             indigo_socket = soc.socket()
             indigo_socket.connect(('127.0.0.1', 4003))
-            welcome = "Welcome to Indigo airlines"
+            welcome = "Welcome to Indigo airlines."
             c.send(str(welcome).encode('ascii'))
             menu = indigo_socket.recv(1024).decode('ascii')
             c.send(str(menu).encode('ascii'))
@@ -62,6 +64,7 @@ while True:
             reply = indigo_socket.recv(1024).decode('ascii')
             c.send(str(reply).encode('ascii'))
             indigo_socket.close()
+
     c.close()
 
 
