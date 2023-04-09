@@ -2,12 +2,12 @@ import socket as soc
 import threading as th
 from aux_func import *
 
-def handle_client(c, addr):
-    username = c.recv(1024).decode('ascii')
+def handle_client(conn, addr):
+    username = conn.recv(1024).decode('ascii')
     username.strip()
     print(f"Client \'{username}\' has logged-in.\n")
     while True:
-        data = c.recv(1024).decode('ascii')
+        data = conn.recv(1024).decode('ascii')
         info = list()
         
         if(not data):
@@ -19,46 +19,46 @@ def handle_client(c, addr):
             print(f"Choice Received for \'{username}\': {operations.capitalize()} Booking.\n")
 
         if(operations == "car"):
-            s1 = soc.socket()
-            s1.connect(('127.0.0.1', 2000))
-            s1.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
-            result = s1.recv(1024).decode('ascii')
+            car_socket = soc.socket()
+            car_socket.connect(('127.0.0.1', 2000))
+            car_socket.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
+            result = car_socket.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
-            s1.close()
+            car_socket.close()
 
         elif(operations == "hotel"):
-            s2 = soc.socket()
-            s2.connect(('127.0.0.1', 6000))
-            s2.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
-            result = s2.recv(1024).decode('ascii')
+            hotel_socket = soc.socket()
+            hotel_socket.connect(('127.0.0.1', 6000))
+            hotel_socket.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
+            result = hotel_socket.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
-            s2.close()
+            hotel_socket.close()
 
         elif (operations == "flight"):
-            s3 = soc.socket()
-            s3.connect(('127.0.0.1', 4000))
-            s3.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
-            result = s3.recv(1024).decode('ascii')
+            flight_socket = soc.socket()
+            flight_socket.connect(('127.0.0.1', 4000))
+            flight_socket.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
+            result = flight_socket.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
-            s3.close()
+            flight_socket.close()
 
         else:
             result = ""
 
-        c.send(str(result).encode('ascii'))
+        conn.send(str(result).encode('ascii'))
 
-    c.close()
+    conn.close()
 
 display()
 print("THIS IS THE ADMIN PANEL. ALL LOGS CAN BE FOUND HERE.\n")
 print("Welcome Admin. You can view the logs below.\nLOGS:\n")
 
-s =  soc.socket()
+client_socket =  soc.socket()
 port = 4328
-s.bind(('127.0.0.1', port))
-s.listen(5)
+client_socket.bind(('127.0.0.1', port))
+client_socket.listen(5)
 
 while True:
-    c, addr = s.accept()
-    t = th.Thread(target = handle_client, args=(c, addr))
+    conn, addr = client_socket.accept()
+    t = th.Thread(target = handle_client, args=(conn, addr))
     t.start()

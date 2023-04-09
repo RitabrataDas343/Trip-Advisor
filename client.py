@@ -3,12 +3,12 @@ from aux_func import *
 
 display()
 
-c = soc.socket()
+server_socket = soc.socket()
 port = 4328
-c.connect(('127.0.0.1', port))
+server_socket.connect(('127.0.0.1', port))
 
 user = input("Enter your username: ")
-c.send(user.encode('ascii'))
+server_socket.send(user.encode('ascii'))
 
 while True:
     print(f"Welcome \'{user}\'. What do you want to do today: \n")
@@ -23,29 +23,29 @@ while True:
         print("\nWe are operational in the following cities: ")
         display_car()
         print()
-        src = input("Enter the name of the city from where you want to go: ")
-        dest = input("Enter the destination where you want to go: ")
-        choice = "car," + src.lower().strip() + "," + dest.lower().strip()
+        source = input("Enter the name of the city from where you want to go: ")
+        destination = input("Enter the destination where you want to go: ")
+        choice = "car," + source.lower().strip() + "," + destination.lower().strip()
 
     elif int(select) == 2:
         print("\nWe are operational in the following cities and hotels: ")
         display_hotel()
         print()
-        dest = input("Enter the name of the city where you want to book the hotel: ")
+        destination = input("Enter the name of the city where you want to book the hotel: ")
         hotel = input("Enter the name of the hotel: ")
-        choice = "hotel," + dest.lower().strip() + "," + hotel.lower().strip()
+        choice = "hotel," + destination.lower().strip() + "," + hotel.lower().strip()
 
     elif int(select) == 3:
         print("\nWe are operational in the following cities: ")
         display_flight()
         print()
-        src = input("Enter the name of the city from where you want to go: ")
-        dest = input("Enter the destination where you want to go: ")
-        choice = "flight," + src.lower().strip() + "," + dest.lower().strip() 
+        source = input("Enter the name of the city from where you want to go: ")
+        destination = input("Enter the destination where you want to go: ")
+        choice = "flight," + source.lower().strip() + "," + destination.lower().strip() 
 
     elif int(select) == 4:
-        cnf = input("Are you sure you want to exit? Type \'Yes\' to confirm: ")
-        if(cnf.lower() == "yes"):
+        confirmation = input("Are you sure you want to exit? Type \'Yes\' to confirm: ")
+        if(confirmation.lower() == "yes"):
             break 
         else:
             continue
@@ -54,10 +54,10 @@ while True:
         print("\nWrong choice. Please select again!!!\n")
         continue
 
-    c.send(choice.encode('ascii'))
+    server_socket.send(choice.encode('ascii'))
 
-    ans = c.recv(1024).decode('ascii')
-    print(f"\nResult: {ans}\n")
+    answer = server_socket.recv(1024).decode('ascii')
+    print(f"\nResult: {answer}\n")
 
 print(f"\nThank you \'{user}\' for using our services. Wishing you a great day ahead!!")
-c.close()
+server_socket.close()
