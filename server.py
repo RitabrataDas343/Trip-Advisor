@@ -3,7 +3,8 @@ import threading as th
 from aux_func import *
 
 def handle_client(c, addr):
-    username = ""
+    username = c.recv(1024).decode('ascii')
+    print(f"Client \'{username}\' has logged-in.\n")
     while True:
         data = c.recv(1024).decode('ascii')
         info = list()

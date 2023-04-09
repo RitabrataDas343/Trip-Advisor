@@ -8,6 +8,7 @@ port = 4328
 c.connect(('127.0.0.1', port))
 
 user = input("Enter your username: ")
+c.send(user.encode('ascii'))
 
 while True:
     print(f"Welcome \'{user}\'. What do you want to do today: \n")
