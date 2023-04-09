@@ -25,7 +25,7 @@ while True:
         print()
         src = input("Enter the name of the city from where you want to go: ")
         dest = input("Enter the destination where you want to go: ")
-        choice = "car," + src.lower().strip() + "," + dest.lower().strip() + "," + user.strip()
+        choice = "car," + src.lower().strip() + "," + dest.lower().strip()
 
     elif int(select) == 2:
         print("\nWe are operational in the following cities and hotels: ")
@@ -33,7 +33,7 @@ while True:
         print()
         dest = input("Enter the name of the city where you want to book the hotel: ")
         hotel = input("Enter the name of the hotel: ")
-        choice = "hotel," + dest.lower().strip() + "," + hotel.lower().strip() + "," + user.strip()
+        choice = "hotel," + dest.lower().strip() + "," + hotel.lower().strip()
 
     elif int(select) == 3:
         print("\nWe are operational in the following cities: ")
@@ -41,7 +41,7 @@ while True:
         print()
         src = input("Enter the name of the city from where you want to go: ")
         dest = input("Enter the destination where you want to go: ")
-        choice = "flight," + src.lower().strip() + "," + dest.lower().strip() + "," + user.strip()
+        choice = "flight," + src.lower().strip() + "," + dest.lower().strip() 
 
     elif int(select) == 4:
         cnf = input("Are you sure you want to exit? Type \'Yes\' to confirm: ")

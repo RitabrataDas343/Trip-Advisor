@@ -4,6 +4,7 @@ from aux_func import *
 
 def handle_client(c, addr):
     username = c.recv(1024).decode('ascii')
+    username.strip()
     print(f"Client \'{username}\' has logged-in.\n")
     while True:
         data = c.recv(1024).decode('ascii')
@@ -15,13 +16,12 @@ def handle_client(c, addr):
         else:
             info = data.split(',')
             operations = info[0]
-            username = info[3]
             print(f"Choice Received for \'{username}\': {operations.capitalize()} Booking.\n")
 
         if(operations == "car"):
             s1 = soc.socket()
             s1.connect(('127.0.0.1', 2000))
-            s1.send(str(info[1]+','+info[2]+','+info[3]).encode('ascii'))
+            s1.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
             result = s1.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
             s1.close()
@@ -29,7 +29,7 @@ def handle_client(c, addr):
         elif(operations == "hotel"):
             s2 = soc.socket()
             s2.connect(('127.0.0.1', 6000))
-            s2.send(str(info[1]+','+info[2]+','+info[3]).encode('ascii'))
+            s2.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
             result = s2.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
             s2.close()
@@ -37,7 +37,7 @@ def handle_client(c, addr):
         elif (operations == "flight"):
             s3 = soc.socket()
             s3.connect(('127.0.0.1', 4000))
-            s3.send(str(info[1]+','+info[2]+','+info[3]).encode('ascii'))
+            s3.send(str(info[1]+','+info[2]+','+username).encode('ascii'))
             result = s3.recv(1024).decode('ascii')
             print(f"Result: {result}\n")
             s3.close()
