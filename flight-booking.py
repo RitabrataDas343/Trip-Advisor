@@ -38,7 +38,7 @@ while True:
                     i[2] = i[2] - 1
                     break
             with open("./data/flight.json", "w") as f:
-                json.dump(flights, f)
+                json.dump(flights, f, indent=4)
             reply = f"Your flight has been booked at {airline} airlines from {src} to {dest}. Seat No.: {genSeatNumber()}"
 
         print(f"Result: {reply}\n")

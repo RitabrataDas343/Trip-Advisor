@@ -1,1 +1,36 @@
-{"Delhi": [["Hotel Ben", 19], ["Hotel Star", 28]], "Mumbai": [["Hotel Royal", 43], ["Hotel Novo", 0], ["Hotel Gio", 32]], "Kolkata": [["Hotel Nabanna", 89], ["Hotel Shimla", 12]]}
+{
+    "Delhi": [
+        [
+            "Hotel Ben",
+            18
+        ],
+        [
+            "Hotel Star",
+            28
+        ]
+    ],
+    "Mumbai": [
+        [
+            "Hotel Royal",
+            43
+        ],
+        [
+            "Hotel Novo",
+            0
+        ],
+        [
+            "Hotel Gio",
+            32
+        ]
+    ],
+    "Kolkata": [
+        [
+            "Hotel Nabanna",
+            89
+        ],
+        [
+            "Hotel Shimla",
+            12
+        ]
+    ]
+}

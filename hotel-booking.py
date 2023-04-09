@@ -43,7 +43,7 @@ while True:
                         i[1] = i[1] - 1
                         break
                 with open("./data/hotel.json", "w") as f:
-                    json.dump(hotel_city, f)
+                    json.dump(hotel_city, f, indent=4)
                 reply = f"Your hotel has been booked at {hotel}, {dest}. Room No.: {genRoomNumber()}"
 
         print(f"Result: {reply}\n")

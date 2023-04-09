@@ -34,7 +34,7 @@ while True:
             car_city[src] = car_city[src] - 1
             car_city[dest] = car_city[dest] + 1
             with open("./data/car.json", "w") as f:
-                json.dump(car_city, f)
+                json.dump(car_city, f, indent=4)
             reply = f"Your car has been booked from {src} to {dest}. Ticket ID: {genTicket()}"
 
         print(f"Result: {reply}\n")
